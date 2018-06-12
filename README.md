@@ -1,6 +1,17 @@
 **Lyber server**
 ----
+# About
 
+The backend server that provides services for `Lyber`
+
+Deployed on Heroku. Link: https://lyber-server.herokuapp.com
+
+Web frontend repo: https://github.com/terrenceliu/Lyber
+
+iOS repo: https://github.com/EdwardFeng523/Lyber-ios
+
+
+# API Documentation
 ## Uber Endpoint
 * **URL**
 
