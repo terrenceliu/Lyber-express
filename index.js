@@ -1,5 +1,3 @@
-const PORT = process.env.PORT || 8000
-
 // Library
 var express = require('express');
 var cors = require('cors');
@@ -19,6 +17,7 @@ app.get('/', function (req, res) {
     res.status(200).send("Hello, World.");
 })
 
-app.listen(PORT, function () {
-    console.log('Server listens on port ' + PORT + '.');
+var port = process.env.PORT || 8000
+app.listen(port, function () {
+    console.log('Server listens on port ' + port + '.');
 })
