@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var fetch = require('node-fetch');
-var config = require('../config.json');
 
 /**
  * Returns all requests
@@ -15,13 +14,13 @@ router.get('/', function (req, response) {
         
         const lyftAPI = `https://api.lyft.com/v1/cost?start_lat=${deparLat}&start_lng=${deparLng}&end_lat=${destLat}&end_lng=${destLng}`;
 
-        var lyftToken = "bearer "
-        if (process.env.lyftToken) {
-            lyftToken += process.env.lyftToken;
-        } else {
-            var config = "../config.json";
-            lyftToken += config.lyftToken;
-        }
+        var lyftToken = "bearer " + process.env.lyftToken;
+        // if (process.env.lyftToken) {
+        //     lyftToken += process.env.lyftToken;
+        // } else {
+        //     var config = require("../config.json");
+        //     lyftToken += config.lyftToken;
+        // }
         
         const lyftData = fetch(lyftAPI, {
             headers: {
