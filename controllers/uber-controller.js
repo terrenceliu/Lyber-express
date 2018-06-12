@@ -8,7 +8,7 @@ var config = require('../config.json');
  * Returns all requests
  */
 router.get('/', function (req, response) {
-    if (req.query.depar_lat && req.query.depar_lng && req.query.dest_lat && req.query_dest_lng) {
+    if (req.query.depar_lat && req.query.depar_lng && req.query.dest_lat && req.query.dest_lng) {
         const deparLat = req.query.depar_lat;
         const deparLng = req.query.depar_lng;
         const destLat = req.query.dest_lat;
