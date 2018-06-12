@@ -11,7 +11,7 @@ router.get('/', function (req, response) {
         const deparLng = req.query.depar_lng;
         const destLat = req.query.dest_lat;
         const destLng = req.query.dest_lng;
-
+        
         const uberAPI = `https://api.uber.com/v1.2/estimates/price?start_latitude=${deparLat}&start_longitude=${deparLng}&end_latitude=${destLat}&end_longitude=${destLng}`;
 
         var uberToken = "Token " + process.env.uberToken;
@@ -32,7 +32,7 @@ router.get('/', function (req, response) {
         })
         .then(res => res.json())
         .then(res => response.send(res));
-        
+
     } else {
         response.send("Uber endpoint");
     }

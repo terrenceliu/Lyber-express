@@ -61,6 +61,8 @@ iOS repo: https://github.com/EdwardFeng523/Lyber-ios
 
 * **Sample Call:**
 
+    https://lyber-server.herokuapp.com/api/uber?depar_lat=29.9902199&depar_lng=-95.33678270000001&dest_lat=29.70045739999999&dest_lng=-95.4097193
+
 ## Lyft Endpoint
 * **URL**
 
@@ -111,6 +113,8 @@ iOS repo: https://github.com/EdwardFeng523/Lyber-ios
 * **Error Response:**
 
 * **Sample Call:**
+
+https://lyber-server.herokuapp.com/api/lyft?depar_lat=29.9902199&depar_lng=-95.33678270000001&dest_lat=29.70045739999999&dest_lng=-95.4097193
 
 
 

@@ -13,7 +13,7 @@ router.get('/', function (req, response) {
         const destLng = req.query.dest_lng;
         
         const lyftAPI = `https://api.lyft.com/v1/cost?start_lat=${deparLat}&start_lng=${deparLng}&end_lat=${destLat}&end_lng=${destLng}`;
-
+        
         var lyftToken = "bearer " + process.env.lyftToken;
         // if (process.env.lyftToken) {
         //     lyftToken += process.env.lyftToken;
@@ -21,7 +21,7 @@ router.get('/', function (req, response) {
         //     var config = require("../config.json");
         //     lyftToken += config.lyftToken;
         // }
-        
+
         const lyftData = fetch(lyftAPI, {
             headers: {
                 'Authorization': lyftToken
