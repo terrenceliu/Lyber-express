@@ -2,13 +2,44 @@
 ----
 # About
 
-The backend server that provides services for `Lyber`
+The backend server that provides services for `Lyber`.
+
+**Lyft api doesn't support cors request smh so here we go**
 
 Deployed on Heroku. Link: https://lyber-server.herokuapp.com
 
 Web frontend repo: https://github.com/terrenceliu/Lyber
 
 iOS repo: https://github.com/EdwardFeng523/Lyber-ios
+
+# Getting started
+
+## Installing
+
+Clone the repository. 
+```
+npm install
+```
+
+Start the local server
+```
+npm run start
+```
+
+## Local development
+
+Install `nodemon` to enable auto restart of the local dev server whenever we make some changes to the codes.
+
+```
+npm install nodemon -g
+```
+
+To start the local dev server
+```
+npm run start:dev
+```
+
+The default port of the server is `8000`.
 
 
 # API Documentation
