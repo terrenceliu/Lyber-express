@@ -14,13 +14,16 @@ router.get('/', function (req, response) {
         
         const uberAPI = `https://api.uber.com/v1.2/estimates/price?start_latitude=${deparLat}&start_longitude=${deparLng}&end_latitude=${destLat}&end_longitude=${destLng}`;
 
-        var uberToken = "Token " + process.env.uberToken;
-        // if (process.env.uberToken) {
-        //     uberToken += process.env.uberToken;
-        // } else {
-        //     var config = require('../config.json');
-        //     uberToken += config.uberToken;
-        // }
+        var uberToken = "Token ";
+        // var uberToken = "Token " + process.env.uberToken;
+        if (process.env.uberToken) {
+            uberToken += process.env.uberToken;
+        } else {
+            var config = require('../config.json');
+            uberToken += config.uberToken;
+        }
+
+        console.log(uberToken);
 
         const uberData = fetch(uberAPI, {
             headers: {
@@ -31,7 +34,8 @@ router.get('/', function (req, response) {
             method: 'GET'
         })
         .then(res => res.json())
-        .then(res => response.send(res));
+        .then(data => response.json(data))
+        .catch(e => console.log(e));
 
     } else {
         response.send("Uber endpoint");
