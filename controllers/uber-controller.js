@@ -2,8 +2,6 @@ var express = require('express');
 var router = express.Router();
 var fetch = require("node-fetch");
 
-var config = require('../config.json');
-
 /**
  * Returns all requests
  */
@@ -16,7 +14,14 @@ router.get('/', function (req, response) {
 
         const uberAPI = `https://api.uber.com/v1.2/estimates/price?start_latitude=${deparLat}&start_longitude=${deparLng}&end_latitude=${destLat}&end_longitude=${destLng}`;
 
-        const uberToken = "Token " + config.uberToken;
+        var uberToken = "Token ";
+        if (process.env.uberToken) {
+            uberToken += process.env.uberToken;
+        } else {
+            var config = require('../config.json');
+            uberToken += config.uberToken;
+        }
+
         const uberData = fetch(uberAPI, {
             headers: {
                 'Authorization': uberToken,
