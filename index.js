@@ -14,7 +14,7 @@ app.use('/api/lyft', lyftController);
 
 // Routers
 app.get('/', function (req, res) {
-    res.status(200).send("Hello, World.");
+    res.status(200).send("Lyber server. Repo link: https://github.com/terrenceliu/Lyber-express");
 })
 
 var port = process.env.PORT || 8000
