@@ -6,13 +6,17 @@ app = express();
 
 var uberController = require('./controllers/uber-controller');
 var lyftController = require('./controllers/lyft-controller');
-var estimateController = require('./controllers/estimateController');
+var estimateController = require('./controllers/estimate-controller');
+var authController = require('./controllers/auth-controller');
 
 // Middlewares
 app.use(cors());
 app.use('/api/uber', uberController);
 app.use('/api/lyft', lyftController);
 app.use('/api/estimate', estimateController);
+app.use('/auth', authController);
+
+
 // Routers
 app.get('/', function (req, res) {
     res.status(200).send("Lyber server. Repo link: https://github.com/terrenceliu/Lyber-express");

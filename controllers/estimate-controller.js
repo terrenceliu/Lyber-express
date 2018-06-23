@@ -70,7 +70,7 @@ router.get('/', function (req, response) {
             response.json(data);
         });
     } else {
-
+        response.send("Estimate endpoint.");
     }
 });
 
