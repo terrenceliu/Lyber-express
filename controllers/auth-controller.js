@@ -8,7 +8,7 @@ var FormData = require('form-data');
  * 
  */
 router.get('/login', function (req, response) {
-    const authURL = "https://login.uber.com/oauth/v2/authorize?response_type=code&client_id=jOOUs484dDpd5ZtVxT5A8cp9CEknN5sz&scope=profile&redirect_uri=http://localhost:8000/auth/redirect"
+    const authURL = "https://login.uber.com/oauth/v2/authorize?response_type=code&client_id=jOOUs484dDpd5ZtVxT5A8cp9CEknN5sz&scope=profile&redirect_uri=https://lyber-server.herokuapp.com/auth/redirect"
     response.redirect(authURL);
 });
 
