@@ -34,8 +34,9 @@ router.get('/redirect', function (req, response) {
     var uberID = undefined;
 
     if (process.env.uberToken) {
-        uberSecret += process.env.uberSecret;
+        uberSecret = process.env.uberSecret;
         uberID = process.env.uberID;
+
     } else {
         var config = require('../config.json');
         uberSecret = config.uberSecret;
@@ -51,6 +52,8 @@ router.get('/redirect', function (req, response) {
     formData.append('redirect_uri', redirect_uri);
     formData.append('code', authCode);
     formData.append('scope', 'profile');
+
+    console.log("FormData ", formData);
 
     // Exchange access token
     // TODO: Fix redirect uri here.
