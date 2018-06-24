@@ -29,14 +29,13 @@ router.get('/redirect', function (req, response) {
 
     // Exchange token
     const tokenURL = "https://login.uber.com/oauth/v2/token";
-
+    
     var uberSecret = undefined;
     var uberID = undefined;
 
     if (process.env.uberToken) {
         uberSecret = process.env.uberSecret;
         uberID = process.env.uberID;
-
     } else {
         var config = require('../config.json');
         uberSecret = config.uberSecret;
