@@ -22,7 +22,7 @@ router.get('/', function (req, response) {
             var config = require("../config.json");
             lyftToken += config.lyftToken;
         }
-
+        
         const lyftData = fetch(lyftAPI, {
             headers: {
                 'Authorization': lyftToken
