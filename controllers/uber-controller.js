@@ -25,7 +25,7 @@ router.get('/', function (req, response) {
         }
 
         console.log(uberToken);
-
+        
         const uberData = fetch(url, {
             headers: {
                 'Authorization': uberToken,
