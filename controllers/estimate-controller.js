@@ -38,18 +38,19 @@ router.get('/', function (req, response) {
         const lyftPriceURL = 'https://api.lyft.com' + `/v1/cost?start_lat=${deparLat}&start_lng=${deparLng}&end_lat=${destLat}&end_lng=${destLng}`;
         const lyftTimeURL = 'https://api.lyft.com' + `/v1/eta?lat=${deparLat}&lng=${deparLng}`;
 
-        var uberPrice = getUberPrice(uberPriceURL)
-        var uberTime = getUberTime(uberTimeURL)
+        var uberPricePromise = getUberPrice(uberPriceURL)
+        var uberTimePromise = getUberTime(uberTimeURL)
 
-        var lyftPrice = getLyftPrice(lyftPriceURL);
-        var lyftTime = getLyftTime(lyftTimeURL);
+        var lyftPricePromise = getLyftPrice(lyftPriceURL);
+        var lyftTimePromise = getLyftTime(lyftTimeURL);
 
-        Promise.all([uberPrice, uberTime, lyftPrice, lyftTime]).then((val) => {
+        Promise.all([uberPricePromise, uberTimePromise, lyftPricePromise, lyftTimePromise]).then(([uberPrice, uberTime, lyftPrice, lyftTime]) => {
             var uberData = uberPrice;
             var lyftData = lyftPrice;
 
             for (var i = 0; i < uberData.length; i++) {
                 for (var j = 0; j < uberTime.length; j++) {
+                    
                     if (uberData[i].display_name == uberTime[j].display_name) {
                         uberData[i].eta = uberTime[j].eta
                     }
@@ -65,12 +66,13 @@ router.get('/', function (req, response) {
                 }
             }
 
+
+
             
             Promise.all([uberData, lyftData]).then(([uber, lyft]) => {
                 data = {
                     "prices": uber.concat(lyft)
                 };
-                // console.log(data);
                 response.json(data);
             });
         }).catch((e) => {
