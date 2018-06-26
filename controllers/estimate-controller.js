@@ -55,20 +55,27 @@ router.get('/', function (req, response) {
                     }
                 }
             }
-
+            
             for (var i = 0; i < lyftData.length; i++) {
                 for (var j = 0; j < lyftTime.length; j++) {
                     if (lyftData[i].display_name == lyftTime[j].display_name) {
                         lyftData[i].eta = lyftTime[j].eta
+                        
                     }
                 }
             }
+
             
-            data = {
-                "prices": uberData.concat(lyftData)
-            };
-            response.json(data);
-        });
+            Promise.all([uberData, lyftData]).then(([uber, lyft]) => {
+                data = {
+                    "prices": uber.concat(lyft)
+                };
+                // console.log(data);
+                response.json(data);
+            });
+        }).catch((e) => {
+            response.send(404, "Failed to fetch data");
+        });;
     } else {
         response.send("Estimate endpoint.");
     }
@@ -87,9 +94,7 @@ getUberPrice = (url) => {
         method: 'GET'
     })
     .then(res => res.json())
-    .then(data => {
-        uberPrice = parseUberPrice(data)
-    })
+    .then(data => parseUberPrice(data))
     .catch(e => console.log(e));
 }
 
@@ -103,9 +108,7 @@ getUberTime = (url) => {
         method: 'GET'
     })
     .then(res => res.json())
-    .then(data => {
-        uberTime = parseUberTime(data)
-    })
+    .then(data => parseUberTime(data))
     .catch(e => console.log(e))
 }
 
@@ -117,7 +120,7 @@ getLyftPrice = (url) => {
         method: 'GET'
     })
     .then(res => res.json())
-    .then(data => lyftData = parseLyftPrice(data))
+    .then(data => parseLyftPrice(data))
     .catch(e => console.log(e));
 }
 
@@ -129,6 +132,7 @@ getLyftTime = (url) => {
         method: 'GET'
     })
     .then(res => res.json())
+    .then(data => parseLyftTime(data))
     .catch(e => console.log(e));
 }
 
@@ -160,7 +164,7 @@ parseUberTime = (e) => {
 parseLyftTime = (e) => {
     var res = [];
 
-    var data = e.times;
+    var data = e.eta_estimates;
 
     var n = data.length;
 
@@ -185,8 +189,6 @@ parseUberPrice = (e) => {
     var data = e.prices;
     
     var n = data.length;
-
-    console.log(n);
     
     for(var i = 0; i < n; i++) {
         const item = data[i];
