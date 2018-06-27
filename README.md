@@ -95,6 +95,7 @@ The default port of the server is `8000`.
                 "min_estimate": 13,
                 "distance": 6.17,
                 "duration": 1080,
+                "eta": 600,
                 "currency_code": "USD"
             }
         ]
@@ -107,10 +108,11 @@ The default port of the server is `8000`.
     :--- | :---| :---
     display_name | string | Name of the product
     product_id | string  | Product id
-    max_estimate | float | Longitude of departure location
-    min_estimate | float | 
-    distance | float | Longitude of destination location
-    duration | float | Length of the trip
+    max_estimate | float | Estimated max price in dollars
+    min_estimate | float | Estimated min price in dollars
+    distance | float | Distance of the ride in miles
+    duration | float | Length of the trip in seconds
+    eta | int | Estimated Arrival Time for the product in seconds
     currency_code | String | 
 
  
