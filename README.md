@@ -122,8 +122,46 @@ The default port of the server is `8000`.
 
     https://lyber-server.herokuapp.com/api/estimate?depar_lat=29.9902199&depar_lng=-95.33678270000001&dest_lat=29.70045739999999&dest_lng=-95.4097193
 
+## Log Endpoint
+* **URL**
 
-## Uber Endpoint
+  /log/request
+
+* **Method**
+
+  `POST`
+
+*  **POST Params**
+
+   **Required:**
+    
+    <Coordinates of departure and destination.>
+    
+    Name | Type | Description 
+    :--- | :---| :---
+    deparLat | float | Latitude of departure location
+    deparLng | float | Longitude of departure location
+    destLat | float | Latitude of destination location
+    destLng | float | Longitude of destination location
+    company | String | Name of the company
+    productName | String | Name of the product selected
+    priceMin | float | Minimum of estimate price
+    priceMax | float | Maximum of estiamte price
+    eta | int | Estimated Arrival Time for the product in seconds
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** 
+    
+    ```json
+    "success"
+    ```
+ 
+* **Error Response:**
+
+
+## (@Deprecated) Uber Endpoint
 * **URL**
 
   /api/uber
@@ -174,7 +212,7 @@ The default port of the server is `8000`.
 
     https://lyber-server.herokuapp.com/api/uber?depar_lat=29.9902199&depar_lng=-95.33678270000001&dest_lat=29.70045739999999&dest_lng=-95.4097193
 
-## Lyft Endpoint
+## (@Deprecated) Lyft Endpoint
 * **URL**
 
   /api/lyft
