@@ -4,6 +4,8 @@ var fetch = require("node-fetch");
 const uberAPI = 'https://api.uber.com';
 
 /**
+ * 
+ * @deprecated
  * Returns all requests
  */
 router.get('/', function (req, response) {

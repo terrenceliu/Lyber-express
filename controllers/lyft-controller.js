@@ -3,6 +3,8 @@ var router = express.Router();
 var fetch = require('node-fetch');
 
 /**
+ * 
+ * @deprecated
  * Returns all requests
  */
 router.get('/', function (req, response) {

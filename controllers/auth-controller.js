@@ -29,7 +29,7 @@ router.get('/redirect', function (req, response) {
 
     // Exchange token
     const tokenURL = "https://login.uber.com/oauth/v2/token";
-    
+
     var uberSecret = undefined;
     var uberID = undefined;
 
@@ -53,7 +53,7 @@ router.get('/redirect', function (req, response) {
     formData.append('scope', 'profile');
 
     console.log("FormData ", formData);
-
+    
     // Exchange access token
     // TODO: Fix redirect uri here.
     const accessToken = fetch(tokenURL, {

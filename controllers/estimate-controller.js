@@ -4,6 +4,9 @@ var fetch = require('node-fetch');
 
 var uberToken = "Token ";
 var lyftToken = "bearer ";
+
+var Estimate = require('../models/estimate');
+
 if (process.env.uberToken) {
     uberToken += process.env.uberToken;
 } else {
@@ -21,9 +24,6 @@ if (process.env.lyftToken) {
 
 /**
  * Returns both Uber & Lyft data
- *   
- * 
- * 
  */
 router.get('/', function (req, response) {
     if (req.query.depar_lat && req.query.depar_lng && req.query.dest_lat && req.query.dest_lng) {
@@ -66,18 +66,36 @@ router.get('/', function (req, response) {
                 }
             }
 
-
-
-            
+            /**
+             * Send back response
+             */
             Promise.all([uberData, lyftData]).then(([uber, lyft]) => {
-                data = {
+                var data = {
                     "prices": uber.concat(lyft)
                 };
                 response.json(data);
+
+                /**
+                * Log into database
+                */
+                var instance = new Estimate();
+
+                instance.deparLat = deparLat;
+                instance.deparLng = deparLng;
+                instance.destLat = destLat;
+                instance.destLng = destLng;
+                instance.estData = data.prices;
+
+                instance.save(function (err) {
+                    if (err) {
+                        console.log('[EstModel] Save error.', err);
+                    }
+                });
             });
+            
         }).catch((e) => {
             response.send(404, "Failed to fetch data");
-        });;
+        });
     } else {
         response.send("Estimate endpoint.");
     }
