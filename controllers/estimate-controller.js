@@ -4,6 +4,7 @@ var fetch = require('node-fetch');
 
 var uberToken = "Token ";
 var lyftToken = "bearer ";
+var uberAccessToken = undefined;
 
 var Estimate = require('../models/estimate');
 
@@ -21,6 +22,12 @@ if (process.env.lyftToken) {
     lyftToken += config.lyftToken;
 }
 
+if (process.env.accessToken) {
+    uberAccessToken = process.env.uberAccessToken;
+} else {
+    var config = require('../config.json');
+    uberAccessToken = config.uberAccessToken;
+}
 
 /**
  * Returns both Uber & Lyft data
@@ -74,7 +81,7 @@ router.get('/', function (req, response) {
                     "prices": uber.concat(lyft)
                 };
                 response.json(data);
-
+                
                 /**
                 * Log into database
                 */
@@ -102,7 +109,7 @@ router.get('/', function (req, response) {
 });
 
 /**
- * 
+ * Price Range
  */
 getUberPrice = (url) => {
     return fetch(url, {

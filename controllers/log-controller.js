@@ -7,7 +7,8 @@ var Request = require('../models/request');
 router.post('/request', function(req, response) {
     var data = req.body;
     var instance = new Request();
-
+    
+    instance.id = data.id;
     instance.deparLat = data.deparLat;
     instance.deparLng = data.deparLng;
     instance.destLat = data.destLat;
@@ -17,6 +18,7 @@ router.post('/request', function(req, response) {
     instance.priceMin = data.priceMin;
     instance.priceMax = data.priceMax;
     instance.eta = data.eta;
+    instance.priority = data.priority;
 
     instance.save(function(err) {
         if (err) {
@@ -25,7 +27,7 @@ router.post('/request', function(req, response) {
             response.send("internal server error");
         }
     });
-
+    
     response.send("logged");
 });
 

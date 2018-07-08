@@ -12,8 +12,6 @@ router.get('/login', function (req, response) {
     response.redirect(authURL);
 });
 
-
-
 /**
  * 
  * 
@@ -21,7 +19,8 @@ router.get('/login', function (req, response) {
  */
 router.get('/redirect', function (req, response) {
     const redirect_uri = "https://lyber-server.herokuapp.com/auth/redirect";
-
+    // const redirect_uri = "http://localhost:8000/auth/redirect";
+    
     // Get auth code
     const authCode = req.query.code;
     
