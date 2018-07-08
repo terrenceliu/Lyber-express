@@ -41,7 +41,7 @@ router.get('/redirect', function (req, response) {
         uberID = config.uberID;
 
     }
-
+    
     var formData = new FormData();
 
     formData.append('client_id', uberID);
@@ -50,7 +50,7 @@ router.get('/redirect', function (req, response) {
     formData.append('redirect_uri', redirect_uri);
     formData.append('code', authCode);
     formData.append('scope', 'profile');
-
+    
     console.log("FormData ", formData);
     
     // Exchange access token
@@ -65,9 +65,6 @@ router.get('/redirect', function (req, response) {
         response.redirect("http://localhost:8080?access_token="+ data.access_token);
     })
     .catch(e => console.log(e));
-
-    
-
 });
 
 module.exports = router;

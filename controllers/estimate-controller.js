@@ -22,13 +22,6 @@ if (process.env.lyftToken) {
     lyftToken += config.lyftToken;
 }
 
-if (process.env.accessToken) {
-    uberAccessToken = process.env.uberAccessToken;
-} else {
-    var config = require('../config.json');
-    uberAccessToken = config.uberAccessToken;
-}
-
 /**
  * Returns both Uber & Lyft data
  */
