@@ -2,6 +2,10 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema
 
 var EstimateSchema = new Schema({
+    requestID: {
+        type: Schema.Types.ObjectId,
+        ref: "Request"
+    },
     deparLat: Schema.Types.Number,
     deparLng: Schema.Types.Number,
     destLat: Schema.Types.Number,

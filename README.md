@@ -99,7 +99,7 @@ The default port of the server is `8000`.
                 "currency_code": "USD"
             }
         ],
-        "uebrAccessToken": "hello, world!"
+        "id": "foo-bar"
     }
     ```
 
@@ -115,6 +115,7 @@ The default port of the server is `8000`.
     duration | float | Length of the trip in seconds
     eta | int | Estimated Arrival Time for the product in seconds
     currency_code | String | 
+    id | String | UUID of the request
 
  
 * **Error Response:**

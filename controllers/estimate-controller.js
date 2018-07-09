@@ -70,27 +70,33 @@ router.get('/', function (req, response) {
              * Send back response
              */
             Promise.all([uberData, lyftData]).then(([uber, lyft]) => {
-                var data = {
-                    "prices": uber.concat(lyft)
-                };
-                response.json(data);
                 
                 /**
                 * Log into database
                 */
                 var instance = new Estimate();
 
+                // console.log("[Estimate] New Estimate. ObjectID: ", instance._id);
+                var data = {
+                    "prices": uber.concat(lyft),
+                    "id": instance._id
+                };
+
                 instance.deparLat = deparLat;
                 instance.deparLng = deparLng;
                 instance.destLat = destLat;
                 instance.destLng = destLng;
                 instance.estData = data.prices;
-
+                
                 instance.save(function (err) {
                     if (err) {
                         console.log('[EstModel] Save error.', err);
                     }
                 });
+
+                // console.log("instance id: ", instance._id);
+                
+                response.json(data);
             });
             
         }).catch((e) => {
