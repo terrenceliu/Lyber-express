@@ -19,7 +19,7 @@ router.post('/request', function(req, response) {
     instance.priceMax = data.priceMax;
     instance.eta = data.eta;
     instance.priority = data.priority;
-
+    
     instance.save(function(err) {
         if (err) {
             console.log("[ReqModel]", err);
