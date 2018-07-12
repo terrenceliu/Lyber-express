@@ -26,7 +26,7 @@ app.use('/log', logController);
 
 // Routers
 app.get('/', function (req, res) {
-    console.log("New connection", req);
+    console.log("New connection");
     res.status(200).send("Lyber server. Repo link: https://github.com/terrenceliu/Lyber-express");
 })
 
