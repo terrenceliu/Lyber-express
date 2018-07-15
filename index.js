@@ -27,7 +27,14 @@ app.use('/log', logController);
 // Routers
 app.get('/api', function (req, res) {
     console.log("New connection");
+    
     res.status(200).send("Lyber server. Repo link: https://github.com/terrenceliu/Lyber-express");
+})
+
+app.get('*', function (req, res) {
+    var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+    console.log("[FallBack]", fullUrl);
+    res.status(200).send("Fall back endpoint. Request full url: " + fullUrl);
 })
 
 var port = process.env.PORT || 8000

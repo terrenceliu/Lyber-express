@@ -81,7 +81,7 @@ router.get('/', function (req, response) {
                     "prices": uber.concat(lyft),
                     "id": instance._id
                 };
-
+                
                 instance.deparLat = deparLat;
                 instance.deparLng = deparLng;
                 instance.destLat = destLat;
