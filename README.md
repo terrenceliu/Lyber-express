@@ -127,7 +127,7 @@ The default port of the server is `8000`.
 ## Log Endpoint
 * **URL**
 
-  /log/request
+  /api/log/request
 
 * **Method**
 
