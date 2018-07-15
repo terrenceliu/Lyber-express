@@ -21,8 +21,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/api/uber', uberController);
 app.use('/api/lyft', lyftController);
 app.use('/api/estimate', estimateController);
-app.use('/auth', authController);
-app.use('/log', logController);
+app.use('/api/auth', authController);
+app.use('/api/log', logController);
 
 // Routers
 app.get('/api', function (req, res) {
