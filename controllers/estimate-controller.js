@@ -23,9 +23,42 @@ if (process.env.lyftToken) {
 }
 
 /**
+ * Returns uber beta test
+ */
+router.get('/uberBeta', function (req, response) {
+
+    console.log('[UberBeta] New request');
+
+    const deparRef = req.query.pickupRef;
+    // const deparRefType = req.query.pickupRefType;
+    const deparLat = req.query.pickupLat;
+    const deparLng = req.query.pickupLng;
+    const destRef = req.query.destinationRef;
+    // const destRefType = req.query.destinationRefType;
+
+    const uberQuery = `?pickupRef=${deparRef}&pickupRefType=google_places&pickupLat=${deparLat}&pickupLng=${deparLng}&destinationRef=${destRef}&destinationRefType=google_places`
+
+    const uberBetaAPI = "https://www.uber.com/api/fare-estimate-beta" + uberQuery;
+
+    fetch(uberBetaAPI, {
+        method: 'GET'
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log("[UberEstData]", data);
+        response.json(data);
+    })
+    .catch(err => {
+        console.log(err);
+    })
+});
+
+
+/**
  * Returns both Uber & Lyft data
  */
 router.get('/', function (req, response) {
+
     if (req.query.depar_lat && req.query.depar_lng && req.query.dest_lat && req.query.dest_lng) {
         const deparLat = req.query.depar_lat;
         const deparLng = req.query.depar_lng;
@@ -106,6 +139,10 @@ router.get('/', function (req, response) {
         response.send("Estimate endpoint.");
     }
 });
+
+
+
+
 
 /**
  * Price Range
