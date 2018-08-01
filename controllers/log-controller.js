@@ -40,7 +40,7 @@ router.post('/feedback', function(req, response) {
     instance.email = data.email ? data.email : "";
     instance.star = data.star ? data.star : -1;
     instance.comment = data.comment ? data.comment : "";
-
+    
     instance.save(function(err) {
         if (err) {
             console.log("[ReqModel][Feedback]", err);
