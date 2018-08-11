@@ -6,20 +6,22 @@ The backend server that provides services for `Lyber`.
 
 **Lyft api doesn't support cors request smh so here we go**
 
-Deployed on Heroku. Link: https://lyber-server.herokuapp.com
+~~Deployed on Heroku. Link: https://lyber-server.herokuapp.com~~
+
+Deployed on Amazon AWS EC2 instance. Homepage: https://lyber.co
 
 Web frontend repo: https://github.com/terrenceliu/Lyber
 
 iOS repo: https://github.com/EdwardFeng523/Lyber-ios
 
-# To-Do List
+# Active Endpoints
 
+Method | URL | Description
+:--- | :--- | :-----
+ GET | `/api/estimate/beta` | (Beta) Estimate fare & ETA
+ GET | `/api/estimate`      | Estimate fare & ETA
+POST | `/api/log/request`   | Log requests to DB
 
-## Endpoint
-Umm |Method | URL | Description
-:--| :--- | :--- | :-----
- [ ]  | GET  | `/estimate/time` | ETA of product
- [ ]  | POST | `/requests/estimate`  | Estimate upfront fare
 
 
 # Getting started
@@ -53,6 +55,81 @@ The default port of the server is `8000`.
 
 
 # API Documentation
+## Estimate Beta Endpoint
+* **Description**
+
+    Return the estimate data from both Uber and Lyft endpoint.
+    This endpoint also supports the upfront fare estimate.
+
+* **URL**
+
+  /api/estimate/beta
+
+* **Method:**
+  
+  `GET`
+  
+*  **URL Params**
+
+   **Required:**
+    
+    <Coordinates of departure and destination.>
+
+    Name | Type | Description 
+    :--- | :---| :---
+    depar_lat | float | Latitude of departure location
+    depar_lng | float | Longitude of departure location
+    dest_lat | float | Latitude of destination location
+    dest_lng | float | Longitude of destination location
+    dest_ref | string | Google Place ID of the destination. Details: https://developers.google.com/places/place-id
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** 
+    
+    ```json
+    {
+        "prices": [
+            {
+                "company": "uber",
+                "display_name": "uberX",
+                "product_id": "a1111c8c-c720-46c3-8534-2fcdd730040d",
+                "max_estimate": 17,
+                "min_estimate": 13,
+                "fare_estimate": "$15.63",
+                "distance": 6.17,
+                "duration": 1080,
+                "eta": 600,
+                "currency_code": "USD"
+            }
+        ],
+        "id": "foo-bar"
+    }
+    ```
+
+    <Coordinates of departure and destination.>
+
+    Name | Type | Description 
+    :--- | :---| :---
+    display_name | string | Name of the product
+    product_id | string  | Product id
+    max_estimate | float | Estimated max price in dollars
+    min_estimate | float | Estimated min price in dollars
+    fare_estimate | string | Upfront estimate price in dollars
+    distance | float | Distance of the ride in miles
+    duration | float | Length of the trip in seconds
+    eta | int | Estimated Arrival Time for the product in seconds
+    currency_code | String | 
+    id | String | UUID of the request
+
+ 
+* **Error Response:**
+
+* **Sample Call:**
+
+    https://lyber.co/api/estimate?depar_lat=29.9902199&depar_lng=-95.33678270000001&dest_lat=29.70045739999999&dest_lng=-95.4097193
+
 ## Estimate Endpoint
 * **Description**
 
@@ -122,7 +199,7 @@ The default port of the server is `8000`.
 
 * **Sample Call:**
 
-    https://lyber-server.herokuapp.com/api/estimate?depar_lat=29.9902199&depar_lng=-95.33678270000001&dest_lat=29.70045739999999&dest_lng=-95.4097193
+    https://lyber.co/api/estimate?depar_lat=29.9902199&depar_lng=-95.33678270000001&dest_lat=29.70045739999999&dest_lng=-95.4097193
 
 ## Log Endpoint
 * **URL**
@@ -215,7 +292,7 @@ The default port of the server is `8000`.
 
 * **Sample Call:**
 
-    https://lyber-server.herokuapp.com/api/uber?depar_lat=29.9902199&depar_lng=-95.33678270000001&dest_lat=29.70045739999999&dest_lng=-95.4097193
+    https://lyber.co/api/uber?depar_lat=29.9902199&depar_lng=-95.33678270000001&dest_lat=29.70045739999999&dest_lng=-95.4097193
 
 ## (@Deprecated) Lyft Endpoint
 * **URL**
@@ -268,7 +345,7 @@ The default port of the server is `8000`.
 
 * **Sample Call:**
 
-https://lyber-server.herokuapp.com/api/lyft?depar_lat=29.9902199&depar_lng=-95.33678270000001&dest_lat=29.70045739999999&dest_lng=-95.4097193
+https://lyber.co/api/lyft?depar_lat=29.9902199&depar_lng=-95.33678270000001&dest_lat=29.70045739999999&dest_lng=-95.4097193
 
 
 
