@@ -35,7 +35,7 @@ router.get('/beta', function (req, response) {
         const destLat = req.query.dest_lat;
         const destLng = req.query.dest_lng;
 
-        // const deparRef = req.query.depar_ref;
+        const deparRef = req.query.depar_ref;
         const destRef = req.query.dest_ref;
 
         const uberPriceURL = 'https://api.uber.com' + `/v1.2/estimates/price?start_latitude=${deparLat}&start_longitude=${deparLng}&end_latitude=${destLat}&end_longitude=${destLng}`;
@@ -317,7 +317,7 @@ estimateUber = (estimates) => {
     for (var i = 0; i < data.length; i ++) {
         temp = {};
         temp.display_name = data[i].vehicleViewDisplayName;
-        temp.fare_estimate = data[i].fareString;
+        temp.fare_estimate = parseFloat(data[i].fareString.split("$")[1]);
         res.push(temp)
     }
     return res;
@@ -461,7 +461,7 @@ parseLyftPrice = (e) => {
             product_id: item.ride_type,
             max_estimate: item.estimated_cost_cents_max * 1.0 / 100,
             min_estimate: item.estimated_cost_cents_min * 1.0 / 100,
-            fare_estimate: "$" + estimates.toFixed(2),
+            fare_estimate: estimates.toFixed(2),
             distance: item.estimated_distance_miles,
             duration: item.estimated_duration_seconds,
             currency_code: item.currency
