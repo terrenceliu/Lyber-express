@@ -116,7 +116,7 @@ The default port of the server is `8000`.
     product_id | string  | Product id
     max_estimate | float | Estimated max price in dollars
     min_estimate | float | Estimated min price in dollars
-    fare_estimate | string | Upfront estimate price in dollars
+    fare_estimate | float | Upfront estimate price in dollars
     distance | float | Distance of the ride in miles
     duration | float | Length of the trip in seconds
     eta | int | Estimated Arrival Time for the product in seconds

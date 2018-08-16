@@ -48,6 +48,8 @@ router.get('/beta', function (req, response) {
         const lyftPriceURL = 'https://api.lyft.com' + `/v1/cost?start_lat=${deparLat}&start_lng=${deparLng}&end_lat=${destLat}&end_lng=${destLng}`;
         const lyftTimeURL = 'https://api.lyft.com' + `/v1/eta?lat=${deparLat}&lng=${deparLng}`;
 
+        console.log(uberBetaURL);
+
         var uberPricePromise = getUberPrice(uberPriceURL);
         var uberTimePromise = getUberTime(uberTimeURL);
         var uberBetaPromise = getUberBeta(uberBetaURL);
@@ -133,11 +135,11 @@ router.get('/beta', function (req, response) {
  * Returns uber beta test
  */
 router.get('/uberBeta', function (req, response) {
-    const deparRef = req.query.pickupRef;
+    const deparRef = req.query.depar_ref;
     // const deparRefType = req.query.pickupRefType;
-    const deparLat = req.query.pickupLat;
-    const deparLng = req.query.pickupLng;
-    const destRef = req.query.destinationRef;
+    const deparLat = req.query.depar_lat;
+    const deparLng = req.query.depar_lng;
+    const destRef = req.query.dest_ref;
     // const destRefType = req.query.destinationRefType;
 
     const uberQuery = `?pickupRef=${deparRef}&pickupRefType=google_places&pickupLat=${deparLat}&pickupLng=${deparLng}&destinationRef=${destRef}&destinationRefType=google_places`
@@ -148,12 +150,12 @@ router.get('/uberBeta', function (req, response) {
         method: 'GET'
     })
     .then(response => response.json())
-    .then(estimateUber)
     .then(data => {
-        console.log(data);
+        // console.log(data);
         response.json(data);
     })
     .catch(err => {
+        response.send(404, "Failed to fetch data");
         console.log(err);
     })
 });
@@ -209,7 +211,7 @@ router.get('/', function (req, response) {
         Promise.all([uberPricePromise, uberTimePromise, lyftPricePromise, lyftTimePromise]).then(([uberPrice, uberTime, lyftPrice, lyftTime]) => {
             var uberData = uberPrice;
             var lyftData = lyftPrice;
-
+            
             for (var i = 0; i < uberData.length; i++) {
                 for (var j = 0; j < uberTime.length; j++) {
                     
@@ -312,15 +314,19 @@ getUberBeta = (uberBetaAPI) => {
 }
 
 estimateUber = (estimates) => {
-    let data = estimates.prices;
-    res = [];
-    for (var i = 0; i < data.length; i ++) {
-        temp = {};
-        temp.display_name = data[i].vehicleViewDisplayName;
-        temp.fare_estimate = parseFloat(data[i].fareString.split("$")[1]);
-        res.push(temp)
+    if (estimates.prices) {
+        let data = estimates.prices;
+        res = [];
+        for (var i = 0; i < data.length; i ++) {
+            temp = {};
+            temp.display_name = data[i].vehicleViewDisplayName;
+            temp.fare_estimate = parseFloat(data[i].fareString.split("$")[1]);
+            res.push(temp)
+        }
+        return res;
+    } else {
+        return estimates;
     }
-    return res;
 }
 
 estimateLyft = (estimates) => {
