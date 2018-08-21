@@ -47,9 +47,7 @@ router.get('/beta', function (req, response) {
 
         const lyftPriceURL = 'https://api.lyft.com' + `/v1/cost?start_lat=${deparLat}&start_lng=${deparLng}&end_lat=${destLat}&end_lng=${destLng}`;
         const lyftTimeURL = 'https://api.lyft.com' + `/v1/eta?lat=${deparLat}&lng=${deparLng}`;
-
-        console.log(uberBetaURL);
-
+        
         var uberPricePromise = getUberPrice(uberPriceURL);
         var uberTimePromise = getUberTime(uberTimeURL);
         var uberBetaPromise = getUberBeta(uberBetaURL);
@@ -264,7 +262,7 @@ router.get('/', function (req, response) {
             });
             
         }).catch((e) => {
-            response.send(404, "Failed to fetch data");
+            response.send(404, null);
         });
     } else {
         response.send("Estimate endpoint.");
@@ -456,10 +454,15 @@ parseLyftPrice = (e) => {
         miles = item.estimated_distance_miles;
         sec = item.estimated_duration_seconds;
         type = item.ride_type;
+        estimates = null;
 
-        price = LyftPrice[type];
-        
-        estimates = 1.0 * miles * price.cost_mile + 1.0 * sec / 60.0 * price.cost_min + price.base_fare + price.service_fee
+        try {
+            price = LyftPrice[type];
+            estimates = 1.0 * miles * price.cost_mile + 1.0 * sec / 60.0 * price.cost_min + price.base_fare + price.service_fee
+        }
+        catch(err) {
+            console.log(err);
+        }
 
         res.push({
             company: "lyft",
@@ -467,7 +470,7 @@ parseLyftPrice = (e) => {
             product_id: item.ride_type,
             max_estimate: item.estimated_cost_cents_max * 1.0 / 100,
             min_estimate: item.estimated_cost_cents_min * 1.0 / 100,
-            fare_estimate: estimates.toFixed(2),
+            fare_estimate: estimates,
             distance: item.estimated_distance_miles,
             duration: item.estimated_duration_seconds,
             currency_code: item.currency
