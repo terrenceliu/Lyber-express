@@ -3,6 +3,7 @@ var router = express.Router();
 
 // Model
 var Request = require('../models/request');
+var Feedback = require('../models/feedback');
 
 router.post('/request', function(req, response) {
     var data = req.body;
@@ -29,6 +30,26 @@ router.post('/request', function(req, response) {
     });
     
     response.send("logged");
+});
+
+router.post('/feedback', function(req, response) {
+    var data = req.body;
+    var instance = new Feedback();
+    
+    instance.name = data.name ? data.name : "";
+    instance.email = data.email ? data.email : "";
+    instance.star = data.star ? data.star : -1;
+    instance.comment = data.comment ? data.comment : "";
+    
+    instance.save(function(err) {
+        if (err) {
+            console.log("[ReqModel][Feedback]", err);
+            response.status(500);
+            response.send("interval server error");
+        }
+    })
+
+    response.send("saved feedback");
 });
 
 module.exports = router;

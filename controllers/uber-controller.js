@@ -25,7 +25,7 @@ router.get('/', function (req, response) {
             var config = require('../config.json');
             uberToken += config.uberToken;
         }
-
+        
         console.log(uberToken);
         
         const uberData = fetch(url, {

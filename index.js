@@ -21,12 +21,20 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/api/uber', uberController);
 app.use('/api/lyft', lyftController);
 app.use('/api/estimate', estimateController);
-app.use('/auth', authController);
-app.use('/log', logController);
+app.use('/api/auth', authController);
+app.use('/api/log', logController);
 
 // Routers
-app.get('/', function (req, res) {
+app.get('/api', function (req, res) {
+    console.log("New connection");
+    
     res.status(200).send("Lyber server. Repo link: https://github.com/terrenceliu/Lyber-express");
+})
+
+app.get('*', function (req, res) {
+    var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+    console.log("[FallBack]", fullUrl);
+    res.status(200).send("Fall back endpoint. Request full url: " + fullUrl);
 })
 
 var port = process.env.PORT || 8000

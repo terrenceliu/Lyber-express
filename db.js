@@ -1,7 +1,6 @@
 var mongoose = require('mongoose');
-var db_uri = 
-process.env.MONGODB_URI ||
-"mongodb://localhost/lyber-server"
+var config = require('./config.json');
+var db_uri = (config.mongoUserName && config.mongoPwd) ? `mongodb://${config.mongoUserName}:${config.mongoPwd}@localhost/lyber-server` : "mongodb://localhost/lyber-server"
 
 var port = process.env.PORT || 27017
 
