@@ -3,7 +3,6 @@ var router = express.Router();
 var fetch = require('node-fetch');
 var FormData = require('form-data');
 
-
 /**
  * 
  */
@@ -18,7 +17,7 @@ router.get('/login', function (req, response) {
  * 
  */
 router.get('/redirect', function (req, response) {
-    const redirect_uri = "https://lyber-server.herokuapp.com/auth/redirect";
+    const redirect_uri = "https://lyber.co/auth/redirect";
     // const redirect_uri = "http://localhost:8000/auth/redirect";
     
     // Get auth code
@@ -62,7 +61,7 @@ router.get('/redirect', function (req, response) {
     .then(response => response.json())
     .then(data => {
         console.log("Access response", data);
-        response.redirect("http://localhost:8080?access_token="+ data.access_token);
+        response.redirect("https://lyber.co?access_token="+ data.access_token);
     })
     .catch(e => console.log(e));
 });

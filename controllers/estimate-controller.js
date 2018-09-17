@@ -55,8 +55,16 @@ router.get('/beta', function (req, response) {
         var lyftPricePromise = getLyftPrice(lyftPriceURL);
         var lyftTimePromise = getLyftTime(lyftTimeURL);
 
+        // Test code
+
         Promise.all([uberPricePromise, uberTimePromise, uberBetaPromise, lyftPricePromise, lyftTimePromise])
         .then(([uberPrice, uberTime, uberFare, lyftPrice, lyftTime]) => {
+            if (!uberPrice || !uberTime || !uberFare || !lyftPrice || !lyftTime) {
+                console.log("missing");
+                // console.log()
+            }
+
+            
             var uberData = uberPrice;
             var lyftData = lyftPrice;
 
@@ -116,7 +124,6 @@ router.get('/beta', function (req, response) {
                 });
                 
                 // console.log("instance id: ", instance._id);
-                
                 response.json(data);
             });
             
@@ -419,10 +426,11 @@ parseLyftTime = (e) => {
  * 
  */
 parseUberPrice = (e) => {
+
     var res = [];
     
     var data = e.prices;
-    
+
     var n = data.length;
     
     for(var i = 0; i < n; i++) {
@@ -458,12 +466,13 @@ parseLyftPrice = (e) => {
 
         try {
             price = LyftPrice[type];
+            // console.log(type);
             estimates = 1.0 * miles * price.cost_mile + 1.0 * sec / 60.0 * price.cost_min + price.base_fare + price.service_fee
         }
         catch(err) {
             console.log(err);
         }
-
+        
         res.push({
             company: "lyft",
             display_name: item.display_name,
