@@ -81,10 +81,12 @@ router.get('/beta', function (req, response) {
             for (var i = 0; i < uberData.length; i++) {
                 for (var j = 0; j < uberFare.length; j++) {
                     if (uberData[i].display_name == uberFare[j].display_name) {
-                        uberData[i].fare_estimate = uberFare[i].fare_estimate;
+                        uberData[i].fare_estimate = uberFare[j].fare_estimate;
                     }
                 }
             }
+
+            console.log(uberData);
 
             for (var i = 0; i < lyftData.length; i++) {
                 for (var j = 0; j < lyftTime.length; j++) {
@@ -328,6 +330,7 @@ estimateUber = (estimates) => {
             temp.fare_estimate = parseFloat(data[i].fareString.split("$")[1]);
             res.push(temp)
         }
+        console.log(res);
         return res;
     } else {
         return estimates;
