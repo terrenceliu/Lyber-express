@@ -18,10 +18,9 @@ iOS repo: https://github.com/EdwardFeng523/Lyber-ios
 
 Method | URL | Description
 :--- | :--- | :-----
- GET | `/api/estimate/beta` | (Beta) Estimate fare & ETA
+ GET | `/api/estimate/beta` | (Beta) Exact pricing estimate & ETA
  GET | `/api/estimate`      | Estimate fare & ETA
 POST | `/api/log/request`   | Log requests to DB
-
 
 
 # Getting started
@@ -128,7 +127,7 @@ The default port of the server is `8000`.
 
 * **Sample Call:**
 
-    https://lyber.co/api/estimate?depar_lat=29.9902199&depar_lng=-95.33678270000001&dest_lat=29.70045739999999&dest_lng=-95.4097193
+    https://lyber.co/api/estimate/beta?depar_lat=29.704844899999998&depar_lng=-95.41860729999999&dest_lat=29.7427584&dest_lng=-95.3798506&dest_ref=ChIJsxPKx26_QIYRw4B1m_fbSgQ
 
 ## Estimate Endpoint
 * **Description**
