@@ -17,7 +17,7 @@ router.get('/login', function (req, response) {
  * 
  */
 router.get('/redirect', function (req, response) {
-    const redirect_uri = "https://lyber.co/auth/redirect";
+    const redirect_uri = "https://lyber.co/api/auth/redirect";
     // const redirect_uri = "http://localhost:8000/auth/redirect";
     
     // Get auth code
