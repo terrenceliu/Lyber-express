@@ -55,8 +55,16 @@ router.get('/beta', function (req, response) {
         var lyftPricePromise = getLyftPrice(lyftPriceURL);
         var lyftTimePromise = getLyftTime(lyftTimeURL);
 
+        // Test code
+
         Promise.all([uberPricePromise, uberTimePromise, uberBetaPromise, lyftPricePromise, lyftTimePromise])
         .then(([uberPrice, uberTime, uberFare, lyftPrice, lyftTime]) => {
+            if (!uberPrice || !uberTime || !uberFare || !lyftPrice || !lyftTime) {
+                console.log("missing");
+                // console.log()
+            }
+
+            
             var uberData = uberPrice;
             var lyftData = lyftPrice;
 
@@ -73,10 +81,12 @@ router.get('/beta', function (req, response) {
             for (var i = 0; i < uberData.length; i++) {
                 for (var j = 0; j < uberFare.length; j++) {
                     if (uberData[i].display_name == uberFare[j].display_name) {
-                        uberData[i].fare_estimate = uberFare[i].fare_estimate;
+                        uberData[i].fare_estimate = uberFare[j].fare_estimate;
                     }
                 }
             }
+
+            console.log(uberData);
 
             for (var i = 0; i < lyftData.length; i++) {
                 for (var j = 0; j < lyftTime.length; j++) {
@@ -116,7 +126,6 @@ router.get('/beta', function (req, response) {
                 });
                 
                 // console.log("instance id: ", instance._id);
-                
                 response.json(data);
             });
             
@@ -321,6 +330,7 @@ estimateUber = (estimates) => {
             temp.fare_estimate = parseFloat(data[i].fareString.split("$")[1]);
             res.push(temp)
         }
+        console.log(res);
         return res;
     } else {
         return estimates;
@@ -419,10 +429,11 @@ parseLyftTime = (e) => {
  * 
  */
 parseUberPrice = (e) => {
+
     var res = [];
     
     var data = e.prices;
-    
+
     var n = data.length;
     
     for(var i = 0; i < n; i++) {
@@ -458,12 +469,13 @@ parseLyftPrice = (e) => {
 
         try {
             price = LyftPrice[type];
+            // console.log(type);
             estimates = 1.0 * miles * price.cost_mile + 1.0 * sec / 60.0 * price.cost_min + price.base_fare + price.service_fee
         }
         catch(err) {
             console.log(err);
         }
-
+        
         res.push({
             company: "lyft",
             display_name: item.display_name,
